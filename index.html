@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Math Helper</title>
+  <meta name="description" content="A spoken, step-by-step long division coach for students with dyscalculia. Students work on paper; the app tells them what to ask themselves next.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f5fbf'/%3E%3Ctext x='32' y='46' font-size='40' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3E%C3%B7%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" id="brand">
+      <span class="brand-mark" aria-hidden="true">÷</span>
+      <span>Math Helper</span>
+    </a>
+    <div class="topbar-problem" id="topProblem" aria-live="polite"></div>
+    <button class="btn ghost" id="settingsBtn" type="button">Settings</button>
+  </header>
+
+  <p class="notice" id="noSpeech" hidden>This browser can't read out loud. Try Chrome, Edge, or Safari to hear each step.</p>
+
+  <main>
+    <!-- Home -->
+    <section class="view home" id="home" hidden>
+      <div class="home-intro">
+        <h1>Long division, one step at a time</h1>
+        <p class="lede">Work on your paper. Math Helper reads each step out loud and tells you what to ask yourself next.</p>
+      </div>
+
+      <div class="card" id="assigned" hidden>
+        <h2>Problems from your teacher</h2>
+        <div class="chips" id="assignedList"></div>
+      </div>
+
+      <form class="card entry" id="entryForm" novalidate>
+        <h2>Type your problem</h2>
+        <div class="entry-row">
+          <label class="entry-field">
+            <span>Number to divide</span>
+            <input id="dividendInput" inputmode="numeric" autocomplete="off" maxlength="6">
+          </label>
+          <span class="entry-op" aria-hidden="true">÷</span>
+          <label class="entry-field small">
+            <span>Divide by</span>
+            <input id="divisorInput" inputmode="numeric" autocomplete="off" maxlength="2">
+          </label>
+        </div>
+        <p class="entry-error" id="entryError" role="alert"></p>
+        <div class="entry-actions">
+          <button class="btn primary big" type="submit" value="start">Start from the beginning</button>
+          <button class="btn lost big" type="submit" value="lost">I'm stuck in the middle</button>
+        </div>
+        <div class="examples">
+          <span>Try one:</span>
+          <div class="chips" id="exampleList"></div>
+        </div>
+      </form>
+
+      <details class="card teacher">
+        <summary>For teachers: make a link for your class</summary>
+        <p>Type problems separated by commas. When students open the link, the problems are ready. No login needed.</p>
+        <label class="sr-only" for="setInput">Problems</label>
+        <textarea id="setInput" rows="2" placeholder="943/3, 937/5, 1074/15"></textarea>
+        <p class="entry-error" id="setError" role="alert"></p>
+        <button class="btn" id="makeLink" type="button">Make link</button>
+        <div class="link-out" id="linkOut" hidden>
+          <label class="sr-only" for="linkText">Link for students</label>
+          <input id="linkText" readonly>
+          <button class="btn" id="copyLink" type="button">Copy</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- Coach: "Keep the Beat" -->
+    <section class="view coach" id="coach" hidden>
+      <aside class="coach-side">
+        <div class="ring" id="ring"></div>
+        <figure class="diagram">
+          <div id="diagram"></div>
+          <figcaption>Where to look on your paper</figcaption>
+        </figure>
+      </aside>
+      <div class="coach-main">
+        <article class="step-card" id="stepCard"></article>
+        <div class="coach-nav">
+          <button class="btn" id="backBtn" type="button"><span aria-hidden="true">←</span> Back</button>
+          <button class="btn" id="readBtn" type="button"></button>
+          <button class="btn primary" id="nextBtn" type="button"></button>
+        </div>
+        <button class="btn lost wide" id="lostBtn" type="button">I'm lost. Where am I?</button>
+      </div>
+    </section>
+
+    <!-- "Where am I?" recovery ladder -->
+    <section class="view ladder" id="ladder" hidden>
+      <article class="card ladder-card" id="ladderCard"></article>
+    </section>
+  </main>
+
+  <dialog id="settings">
+    <form method="dialog" class="settings-form">
+      <h2>Settings</h2>
+      <fieldset>
+        <legend>Reading speed</legend>
+        <label><input type="radio" name="rate" value="0.75"> Slower</label>
+        <label><input type="radio" name="rate" value="0.9"> Normal</label>
+        <label><input type="radio" name="rate" value="1.05"> Faster</label>
+      </fieldset>
+      <label class="switch"><input type="checkbox" id="autoRead"> Read each step out loud automatically</label>
+      <label class="select">
+        <span>Voice</span>
+        <select id="voiceSelect"></select>
+      </label>
+      <button class="btn primary" id="testVoice" type="button">Test the voice</button>
+      <p class="say" id="voiceSample" hidden></p>
+      <div class="settings-actions">
+        <button class="btn" value="close">Done</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

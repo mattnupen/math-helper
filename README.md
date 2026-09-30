@@ -2,8 +2,22 @@
 
 A web app that coaches students with math-related learning disabilities (including dyscalculia) through multi-step math problems, starting with long division. It works as a spoken, step-by-step flowchart.
 
+**▶ Try it: https://mattnupen.github.io/math-helper/**
+
+![Math Helper coaching the Subtract step of 943 ÷ 3, round 2 of 3](docs/screenshot.png)
+
 > **Origin:** This project began as a design conversation with Claude:
 > https://claude.ai/share/a8d07fc9-f406-4499-89f2-91d14b12b361
+
+## What it does now
+
+- **Keep the Beat.** A student types a problem, such as `943 ÷ 3`, and works it on paper. The app walks through **Divide → Multiply → Subtract → Bring down** one step at a time. For each step it reads the question aloud and highlights each word as it's spoken. A four-step ring shows the current step and round, and a sketch shows *where on the paper* to look. The sketch never shows numbers the student hasn't worked out yet.
+- **Where am I?** A student who gets lost partway through presses one button and answers two questions they can answer just by looking at their paper: "How many digits are on top?" and "Which picture looks like your paper?" The app finds their place and takes them straight to the next step. If the paper doesn't match any step, it offers to start the problem again.
+- **Check my number (optional).** A student can type what they got. The app only says "Yes, that matches" or "Not quite", then offers a strategy tip. It never gives the answer.
+- **Teacher links.** Type a list like `943/3, 937/5, 1074/15` to get a link. When students open it, the problems are ready. There's no login and no server, and nothing is sent anywhere.
+- **Settings.** Reading speed, voice, and whether each step is read aloud automatically.
+
+Speech uses the browser's built-in voices. It works best in Chrome, Edge, or Safari on a computer.
 
 ## The problem
 
@@ -40,15 +54,42 @@ This is a gap in knowing what to do next, more than in doing the arithmetic. Too
 
 Concepts 1 and 2 use the same underlying model of the steps, with two ways in. One starts at the beginning of a problem and the other starts from the middle when a student is stuck.
 
-## v1 scope
+## v1 scope (built)
 
-- Long division only
+- Long division only, with up to 6-digit dividends and 1- or 2-digit divisors
 - Problems are typed in
 - No backend: everything runs in the browser, and problems are stored in the URL. Teachers assign a set of problems by sharing a link, with no login needed.
+
+## Running it locally
+
+It's a static site with no build step. Serve the folder and open it:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then go to http://localhost:8000. Opening `index.html` directly from disk won't work, because the browser blocks JavaScript modules loaded from `file://` pages.
+
+Run the tests (Node 20+):
+
+```bash
+npm test
+```
+
+## Code map
+
+| File | What it holds |
+| --- | --- |
+| `js/division.js` | The long-division steps (rounds, next/previous step, "Where am I?" lookup). Has no page code. |
+| `js/script.js` | The coaching words. Every question is fixed text; only numbers from the problem change. |
+| `js/words.js` | Numbers as spoken words, so speech says "threes", not "3 s". |
+| `js/speech.js` | Text-to-speech with word-by-word highlighting |
+| `js/app.js` | Screens, routing (all state lives in the URL), and the step ring and paper sketches |
+| `tests/` | Tests for the step model, the "Where am I?" lookup, and the fixed wording |
 
 ## Later
 
 - Multi-digit multiplication
 - Photo capture of printed worksheet problems
-- Problem sets preloaded by the teacher, and a teacher view of where students get stuck
+- A teacher view of where students get stuck
 - "The Twin" parallel examples
