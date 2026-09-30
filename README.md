@@ -8,6 +8,8 @@ A web app that coaches students with math-related learning disabilities (includi
 
 > **Origin:** This project began as a design conversation with Claude:
 > https://claude.ai/share/a8d07fc9-f406-4499-89f2-91d14b12b361
+>
+> 🎬 **Watch it being made:** [Making EdTech, Episode 1](https://youtu.be/ZKZEFbjNo28)
 
 ## What it does now
 
