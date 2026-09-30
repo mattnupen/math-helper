@@ -4,12 +4,14 @@ A web app that coaches students with math-related learning disabilities (includi
 
 **▶ Try it: https://mattnupen.github.io/math-helper/**
 
+**▶ 🎬 **Watch how we made it:** [Making EdTech, Episode 1](https://youtu.be/ZKZEFbjNo28)**
+
 ![Math Helper coaching the Subtract step of 943 ÷ 3, round 2 of 3](docs/screenshot.png)
 
 > **Origin:** This project began as a design conversation with Claude:
 > https://claude.ai/share/a8d07fc9-f406-4499-89f2-91d14b12b361
->
-> 🎬 **Watch it being made:** [Making EdTech, Episode 1](https://youtu.be/ZKZEFbjNo28)
+
+
 
 ## What it does now
 
